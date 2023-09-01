@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+            crossorigin="anonymous"></script>
+
+    <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+
+
+    <title>CHEP - Questions</title>
+    <style>
+        .technical {
+            background-color: RGBA(0, 174, 231, var(--bs-bg-opacity, 1)) !important;
+        }
+
+        .business {
+            background-color: RGBA(00, 205, 194, var(--bs-bg-opacity, 1)) !important;
+        }
+
+        .BrambleNavyBlue {
+            color: RGB(0, 85, 149);
+        }
+
+        .BrambleBlue {
+            color: RGB(59, 135, 229);
+        }
+
+        .navbar-brand img {
+            height: 50%;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="/static/img/logo.png" alt="Brambles">
+        </a>
+    </div>
+</nav>
+
+<nav aria-label="breadcrumb">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Questions</li>
+        </ol>
+    </div>
+</nav>
+
+<main class="container">
+    <h1>Questions for {{.family.Name}} band {{.band.Name}}</h1>
+
+    <p class="lead">Read the assessment statement and criteria and rate your current capability level from the list
+        provided</p>
+
+    <div>
+        Please rate yourself against the statements below based on your current knowledge or skill level:
+        <ul>
+            <li><b>Very little or no knowledge</b> - At most I recognise myself in 1-2 statements</li>
+            <li><b>Beginner</b> - I can apply basic knowledge in most of the statements
+                Able to work unsupervised - I have good knowledge and experience in most of the statements and have some
+                supervisory responsibilities in some of those areas
+            </li>
+            <li><b>Advanced knowledge</b> - I can demonstrate strong understanding and experience in all statements and
+                am
+                responsible
+                for the work of others in most areas
+            </li>
+            <li><b>Expert and capable of training others</b> - I can demonstrate extensive skill and experience in all
+                statements and
+                am responsible for driving best practice for that in my business area.
+            </li>
+        </ul>
+        There are no wrong answers. This exercise is being offered as a way for you to manage your in-role development.
+    </div>
+    <div> &nbsp;</div>
+    <form action="/results" method="post">
+        <input type="hidden" id="family_id" name="family_id" value="{{.family.ID}}">
+        <input type="hidden" id="band_id" name="band_id" value="{{.band.ID}}">
+
+        <div class="bg-light container d-grid gap-3">
+
+            {{ range .questions }}
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title BrambleNavyBlue">{{ .Capability }}</h5>
+                    <h6 class="card-title BrambleBlue">{{ .Description }}</h6>
+
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        {{if eq .Category "Technically & Digitally Enabled" }}
+                        <span class="badge text-bg-secondary technical">{{ .Category }}</span>
+                        {{else if eq .Category "Business Focused" }}
+                        <span class="badge text-bg-secondary business">{{ .Category }}</span>
+                        {{else }}
+                        <span class="badge text-bg-secondary ">{{ .Category }}</span>
+                        {{end}}
+                    </h6>
+
+                    <p class="card-text">
+                        <ul>
+                            {{ range .TempCriteria }}
+                            <li> {{ . }}</li>
+                            {{ end }}
+                        </ul>
+                    </p>
+
+
+                    <div class="form-check">
+
+                        <input class="form-check-input" type="radio" id="{{ .ID }}_1" name="{{ .ID }}" value="bf" required>
+                        <label class="form-check-label" for="{{ .ID }}_1">
+                            <b>Very little or no knowledge </b>
+                        </label>
+                        <br>
+
+                        <input class="form-check-input" type="radio" id="{{ .ID }}_2" name="{{ .ID }}" value="f" required>
+                        <label class="form-check-label" for="{{ .ID }}_2">
+                            <b>Beginner</b>
+                        </label>
+                        <br>
+
+                        <input class="form-check-input" type="radio" id="{{ .ID }}_3" name="{{ .ID }}" value="i" required>
+                        <label class="form-check-label" for="{{ .ID }}_3">
+                            <b>Able to work unsupervised</b>
+                        </label>
+                        <br>
+
+                        <input class="form-check-input" type="radio" id="{{ .ID }}_4" name="{{ .ID }}" value="a" required>
+                        <label class="form-check-label" for="{{ .ID }}_4">
+                            <b>Advanced knowledge</b>
+                        </label>
+                        <br>
+
+                        <input class="form-check-input" type="radio" id="{{ .ID }}_5" name="{{ .ID }}" value="e" required>
+                        <label class="form-check-label" for="{{ .ID }}_5">
+                            <b>Expert and capable of training others</b>
+                        </label>
+                        <br>
+
+                    </div>
+                </div>
+            </div>
+
+            {{ end }}
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+    <div class="container">
+        &nbsp;
+    </div>
+</main>
+</body>
+</html>

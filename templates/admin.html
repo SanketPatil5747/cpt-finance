@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+            crossorigin="anonymous"></script>
+
+
+    <title>CHEP - Admin</title>
+    <style>
+        .navbar-brand img {
+            height: 50%;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="/static/img/logo.png" alt="Brambles">
+        </a>
+    </div>
+</nav>
+
+<nav aria-label="breadcrumb">
+    <div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Admin</li>
+    </ol>
+    </div>
+</nav>
+
+<main class="container">
+    <h1>Maintenance Admin</h1>
+
+    <div class="row"> &nbsp;</div>
+
+    <form enctype="multipart/form-data" class="row g-3" method="post" action="/admin/upload">
+        <div class="row">
+            <div class="col-auto">
+                <label for="job_bands" class="form-label">Upload new "job_bands"</label>
+                <input class="form-control" type="file" name="job_bands" id="job_bands">
+            </div>
+
+            <div class="col-auto">
+                <div class="form-label">&nbsp;</div>
+                <a class="btn btn-dark" href="/admin/download?f=job_bands" role="button">Download current
+                    "job_bands.csv"</a>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-auto">
+                <label for="job_families" class="form-label">Upload new "job_families"</label>
+                <input class="form-control" type="file" name="job_families" id="job_families">
+            </div>
+
+            <div class="col-auto">
+                <div class="form-label">&nbsp;</div>
+                <a class="btn btn-dark" href="/admin/download?f=job_families" role="button">Download current
+                    "job_families.csv"</a>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-auto">
+                <label for="job_function" class="form-label">Upload new "job_function"</label>
+                <input class="form-control" type="file" name="job_function" id="job_function">
+            </div>
+
+            <div class="col-auto">
+                <div class="form-label">&nbsp;</div>
+                <a class="btn btn-dark" href="/admin/download?f=job_function" role="button">Download current
+                    "job_function.csv"</a>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-auto">
+                <label for="job_function" class="form-label">Upload new "questions"</label>
+                <input class="form-control" type="file" name="questions" id="questions">
+            </div>
+
+
+            <div class="col-auto">
+                <div class="form-label">&nbsp;</div>
+                <a class="btn btn-dark" href="/admin/download?f=questions" role="button">Download current
+                    "questions.csv"</a>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-auto">
+
+                <label for="competencies" class="form-label">Upload new "competencies"</label>
+                <input class="form-control" type="file" name="competencies" id="competencies">
+            </div>
+
+            <div class="col-auto">
+                <div class="form-label">&nbsp;</div>
+                <a class="btn btn-dark" href="/admin/download?f=competencies" role="button">Download current
+                    "competencies.csv"</a>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-auto">
+                <label for="competencies" class="form-label">Upload new "training"</label>
+                <input class="form-control" type="file" name="training" id="training">
+            </div>
+
+            <div class="col-auto">
+                <div class="form-label">&nbsp;</div>
+                <a class="btn btn-dark" href="/admin/download?f=training" role="button">Download current
+                    "training.csv"</a>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+        </div>
+    </form>
+
+</main>
+</body>
+</html>

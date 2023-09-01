@@ -1,0 +1,6 @@
+{
+    "connection_string": "host=localhost port=5438 user=unicorn_user password=magical_password dbname=rainbow_database sslmode=disable",
+    "port": 8081,
+    "admin_username": "admin",
+    "admin_password": "password123"
+}

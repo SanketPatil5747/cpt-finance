@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-alpha2/html2canvas.min.js" 
+            integrity="sha512-CJi0bpUbf0lNblXz2lmO5mtVBlWi4XLoJjspIsuDemuYf0DbrQnuR/aXvvEpOjr6pyD0iJqeFnljtfcEZ4tYCg==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+            integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <title>CHEP - Results</title>
+
+    <script>
+        function pdf() {
+            const element = document.getElementById('results');
+            const opt = {
+                margin: 1,
+                filename: 'chep-report.pdf',
+                image: {type: 'jpeg', quality: 0.98},
+                html2canvas: {scale: 2,scrollX: 0, scrollY: 0},
+                jsPDF: {unit: 'mm', format: 'letter', orientation: 'portrait'},
+                pagebreak: {mode: ['avoid-all', 'css', 'legacy']}
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+
+    <style>
+        .navbar-brand img {
+            height: 50%;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="/static/img/logo.png" alt="Brambles">
+        </a>
+        <div class="navbar navbar-right">
+            <button onclick="pdf();" class="btn btn-primary  me-2">PDF Download</button>
+        </div>
+    </div>
+</nav>
+
+<nav aria-label="breadcrumb">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item">Questions</li>
+            <li class="breadcrumb-item active" aria-current="page">Results</li>
+        </ol>
+    </div>
+</nav>
+
+<main class="container">
+    <h2>Results for {{.family.Name}} band {{.band.Name}}</h2>
+    <div class="bg-light container d-grid gap-3" id="results">
+
+        <div>
+            <p>Below you will see a list of results based on your responses to the statements on the previous screen and the desired capability level for your role and grade. This will show whether you are already at the desired capability
+                level, or where you are currently below the desired capability level.</p>
+
+            <p>If you are below the desired capability level a list of possible trainings will be provided for you to consider completing, it is recommended that you discuss which trainings are most suitable for your role with your line
+                manager.</p>
+
+            <p>Please save your results as a PDF locally for further reference and to be used during development conversation with your line manager. Your responses will not be saved and cannot be retrieved at a later date.</p>
+
+        </div>
+
+        {{ range .results }}
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ .Question.Description }}</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Your Selected Answer: {{ .AnswerText }}</li>
+                    <li class="list-group-item">Desired proficiency level: {{ .CompetencyText }}</li>
+                    <li class="list-group-item">
+
+                        {{ if not .Gap }}
+                        <b>No Action Required</b>
+                        {{ end }}
+                        {{ if .Gap }}
+                        <b>Training available to develop your skills and knowledge of this capability:</b>
+
+                        {{ end }}
+
+                    </li>
+                </ul>
+
+                <div class="card-body">
+                    <ul>
+                        {{ if .Gap }}
+                            <li> Speak to your line manager to explore suitable development / learning opportunities</li>
+                        {{ end }}
+                        {{ range .Trainings }}
+                            <li>
+                                {{ if eq .TrainingLink "" }}
+                                    {{.TrainingName}}
+                                {{ else }}
+                                    <a href="{{.TrainingLink}}" class="card-link">{{.TrainingName}}</a>
+                                {{end}}
+                            </li>
+                        {{ end }}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        {{ end }}
+    </div>
+    <div class="container">
+        &nbsp;
+    </div>
+</main>
+</body>
+</html>

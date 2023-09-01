@@ -1,0 +1,27 @@
+--- 
+definitions: 
+  services: 
+    docker-py-aws-tf: 
+      image: "py-aws-tf:latest"
+      type: docker
+pipelines: 
+  custom: 
+    role-deploy-safety-indicators: 
+      - 
+        step: 
+          image: softinstigate/maven-aws
+          runs-on: 
+            - self.hosted
+            - linux
+            - financefmwkrunner
+          script:
+            - "aws --version"
+            - "export $(printf \"AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s\" $(aws sts assume-role --role-arn arn:aws:iam::452739563755:role/cpt-automation-deploy-finance-framework --role-session-name MySessionName --tags Key=AppID,Value=APP0002877 Key=CostCenter,Value=GB10GF9312 --query \"Credentials.[AccessKeyId,SecretAccessKey,SessionToken]\" --output text))"
+            - "aws sts get-caller-identity"
+            - "docker login -u AWS -p $(aws ecr get-login-password --region us-east-1)  452739563755.dkr.ecr.us-east-1.amazonaws.com"
+            - "docker build -t ecr-financial_framework ."
+            - "docker tag ecr-financial_framework:latest 452739563755.dkr.ecr.us-east-1.amazonaws.com/ecr-financial_framework:latest"
+            - "docker push 452739563755.dkr.ecr.us-east-1.amazonaws.com/ecr-financial_framework:latest"
+            - "aws ecs update-service --cluster ecs-cluster-capabilityfmwk-prod-cluster --force-new-deployment --service ecs-capabilityfmwk-service --task-definition ecs-capabilityfmwk-task:2 --desired-count 1 --region us-east-1"
+          services: 
+            - docker

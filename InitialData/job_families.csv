@@ -1,0 +1,28 @@
+id,name,display_order,job_function_id
+accounting,Accounting,1,1
+assetproductivity,Asset Productivity,2,1
+bestcontrolcompliance,BEST Control & Compliance,3,1
+billingtransactionstoinvoice,Billing/Transactions to invoice,4,1
+businesspartner,Business Partner,5,1
+commercialfinancesystemstools,Commercial Finance Systems & Tools,6,1
+controllershipsystemstools,Controllership Systems & Tools,7,1
+customerintegrationeka,Customer Integration/EKA,8,1
+datascientist,Data Scientist,9,1
+europeanreportinganalyst,European Reporting Analyst,10,1
+europeanreportingdeveloper,European Reporting Developer,11,1
+financedeveloper,Finance Developer,12,1
+fpa,"F, P & A",13,1
+insurance,Insurance (GF),14,1
+internalaudit,Internal Audit (GF),15,1
+investorrelations,Investor Relations (GF),16,1
+invoice2cash,Invoice 2 Cash,17,1
+procure2pay,Procure 2 Pay,18,1
+projectprogrammemanagement,Project & Programme Management,19,1
+riskmanagement,Risk Management (GF),20,1
+servicedesk,Service Desk,21,1
+statutorycompliance,Statutory compliance,22,1
+supplychainfinance,Supply Chain Finance,23,1
+sustainability,Sustainability (GF),24,1
+tax,Tax (GF),25,1
+taxcompliance,Tax compliance,26,1
+treasury,Treasury (GF),27,1

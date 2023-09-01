@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+            crossorigin="anonymous"></script>
+
+    <title>CHEP - Home</title>
+    <style>
+        .navbar-brand img {
+            height: 50%;
+            width: 50%;
+        }
+
+    
+        #index_page {
+            margin: 0;
+            font-size: 15px;
+            font-family:"Segoe UI"
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="/static/img/logo.png" alt="Brambles">
+        </a>
+    </div>
+</nav>
+
+<nav aria-label="breadcrumb">
+    <div class="container-fluid">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Home</li>
+    </ol>
+    </div>
+</nav>
+
+<main class="container">
+    <div class="bg-light container d-grid gap-3">
+        {{if not .families}}
+        <h3>Welcome to the Chep Capability Assessment Tool.</h3>
+        <p>Please indicate which area of the business you work in to start the assessment.</p>
+        <form action="/" method="post">
+            <div class="mb-3">
+                <label class="form-check-label" for="JobFunction">
+                    Job Function
+                </label>
+                <select class="form-select" name="JobFunction" id="JobFunction">
+                    {{ range .functions }}
+                    <option value="{{ .ID }}">{{ .Name }}</option>
+                    {{ end }}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        {{ end }}
+
+        {{ if .families }}
+        <h3>Welcome to the Chep Capability Assessment Tool.</h3>
+        <p>
+            Thank you for taking the time to complete the Capability Assessment, the assessment will take
+            approximately 30 minutes.
+        </p>
+        <p>
+            The assessment has been aligned to the new capability framework for Chep. Completing this assessment
+            will enable you to assess your current capability levels and identify trainings that will help you develop
+            in role. At the end of this assessment a list of possible trainings will be provided, please save this as a
+            PDF locally to be used during career conversation with your line manager.
+        </p>
+        <p>
+            Please indicate your job family and band to ensure the correct questions are provided and the results align
+            to your expected capability level.
+        </p>
+        <form action="/questions" method="post">
+            <div class="mb-3">
+                <label class="form-check-label" for="JobFamily">
+                    Job Family
+                </label>
+
+                <select class="form-select" name="JobFamily" id="JobFamily">
+                    {{ range .families }}
+                    <option value="{{ .ID }}">{{ .Name }}</option>
+                    {{ end }}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-check-label" for="JobBand">
+                    Job Band
+                </label>
+                <select class="form-select" name="JobBand" id="JobBand">
+                    {{ range .bands }}
+                    <option value="{{ .ID }}">{{ .Name }}</option>
+                    {{ end }}
+                </select>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        {{ end }}
+    </div>
+    <div class="container">
+        &nbsp;
+    </div>
+</main>
+</body>
+</html>
